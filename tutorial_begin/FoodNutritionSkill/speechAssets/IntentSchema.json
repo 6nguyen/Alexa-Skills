@@ -1,0 +1,22 @@
+{
+  "intents": [
+    {
+      "intent": "GetNutritionInfo",
+      "slots": [
+        {
+          "name": "FoodItem",
+          "type": "FOOD_ITEMS"
+        }
+      ]
+    },
+    {
+      "intent": "GetNextEventIntent",
+      "slots": [
+      ]
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    }
+  ]
+}
+

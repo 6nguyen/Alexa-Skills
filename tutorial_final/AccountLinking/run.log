@@ -1,0 +1,368 @@
+
+
+  All intents
+Updating the item...
+DeleteItem succeeded: {}
+    Test LaunchIntent
+2017-02-27T22:11:18.004Z - info: event.session.application.applicationId=amzn1.ask.skill.8015dfcb-2b86-4c0f-abdf-b6f018c17f2b
+2017-02-27T22:11:18.005Z - debug: Incoming request:
+ {
+  "session": {
+    "new": false,
+    "sessionId": "session1234",
+    "attributes": {},
+    "user": {
+      "userId": "testUsr",
+      "accessToken": "ya29.Glz_A24jL7k4s0NQb1oWY7pqFBGpZFjGg2s4It_z6w-bCuG14SBh2kV8EkfZ4Wx61Ax9YscJTOT_Jizaec1Ttj9hmVY8884ol8CYOnFNHmujbIPUmPWQ6tHC-8I6Qw"
+    },
+    "application": {
+      "applicationId": "amzn1.ask.skill.8015dfcb-2b86-4c0f-abdf-b6f018c17f2b"
+    }
+  },
+  "version": "1.0",
+  "request": {
+    "intent": {},
+    "type": "LaunchRequest",
+    "requestId": "request5678"
+  }
+}
+2017-02-27T22:11:18.005Z - debug: onLaunch requestId=request5678, sessionId=session1234
+2017-02-27T22:11:18.005Z - debug: Final response:
+ {
+  "version": "1.0",
+  "response": {
+    "outputSpeech": {
+      "type": "SSML",
+      "ssml": "<speak>Welcome to email checker skill. You can use this skill to check your gmail unread messages. You can say, whats new?</speak>"
+    },
+    "shouldEndSession": false,
+    "reprompt": {
+      "outputSpeech": {
+        "type": "SSML",
+        "ssml": "<speak>What you want to do? You can say, whats new to check your unread messages.</speak>"
+      }
+    }
+  },
+  "sessionAttributes": {}
+} 
+
+
+      ✓ valid response
+      ✓ valid outputSpeech
+      ✓ valid outputSpeech
+    Test EmailCheckIntent
+2017-02-27T22:11:18.010Z - info: event.session.application.applicationId=amzn1.ask.skill.8015dfcb-2b86-4c0f-abdf-b6f018c17f2b
+2017-02-27T22:11:18.010Z - debug: Incoming request:
+ {
+  "session": {
+    "new": false,
+    "sessionId": "session1234",
+    "attributes": {},
+    "user": {
+      "userId": "testUsr",
+      "accessToken": "ya29.Glz_A24jL7k4s0NQb1oWY7pqFBGpZFjGg2s4It_z6w-bCuG14SBh2kV8EkfZ4Wx61Ax9YscJTOT_Jizaec1Ttj9hmVY8884ol8CYOnFNHmujbIPUmPWQ6tHC-8I6Qw"
+    },
+    "application": {
+      "applicationId": "amzn1.ask.skill.8015dfcb-2b86-4c0f-abdf-b6f018c17f2b"
+    }
+  },
+  "version": "1.0",
+  "request": {
+    "intent": {
+      "name": "EmailCheckIntent",
+      "slots": {}
+    },
+    "type": "IntentRequest",
+    "requestId": "request5678"
+  }
+}
+2017-02-27T22:11:18.310Z - debug: 
+2017-02-27T22:11:18.310Z - debug: Final response:
+ {
+  "version": "1.0",
+  "response": {
+    "outputSpeech": {
+      "type": "SSML",
+      "ssml": "<speak>You haven't set the pin. Please set the pin. You can set it to any number</speak>"
+    },
+    "shouldEndSession": false,
+    "reprompt": {
+      "outputSpeech": {
+        "type": "SSML",
+        "ssml": "<speak>For example, you can say set my pin to 1234.</speak>"
+      }
+    }
+  },
+  "sessionAttributes": {}
+} 
+
+
+      ✓ valid response
+      ✓ valid outputSpeech
+      ✓ valid reprompt
+    Test SetPinIntent
+2017-02-27T22:11:18.312Z - info: event.session.application.applicationId=amzn1.ask.skill.8015dfcb-2b86-4c0f-abdf-b6f018c17f2b
+2017-02-27T22:11:18.312Z - debug: Incoming request:
+ {
+  "session": {
+    "new": false,
+    "sessionId": "session1234",
+    "attributes": {},
+    "user": {
+      "userId": "testUsr",
+      "accessToken": "ya29.Glz_A24jL7k4s0NQb1oWY7pqFBGpZFjGg2s4It_z6w-bCuG14SBh2kV8EkfZ4Wx61Ax9YscJTOT_Jizaec1Ttj9hmVY8884ol8CYOnFNHmujbIPUmPWQ6tHC-8I6Qw"
+    },
+    "application": {
+      "applicationId": "amzn1.ask.skill.8015dfcb-2b86-4c0f-abdf-b6f018c17f2b"
+    }
+  },
+  "version": "1.0",
+  "request": {
+    "intent": {
+      "name": "SetPinIntent",
+      "slots": {
+        "SPin": {
+          "name": "SPin",
+          "value": "29592"
+        }
+      }
+    },
+    "type": "IntentRequest",
+    "requestId": "request5678"
+  }
+}
+2017-02-27T22:11:18.586Z - debug: 
+2017-02-27T22:11:18.966Z - debug: Added item: {}
+2017-02-27T22:11:18.966Z - debug: Final response:
+ {
+  "version": "1.0",
+  "response": {
+    "outputSpeech": {
+      "type": "SSML",
+      "ssml": "<speak>Succefully updated pin to <say-as interpret-as=\"digits\">29592</say-as></speak>"
+    },
+    "shouldEndSession": true
+  }
+} 
+
+
+      ✓ valid response
+      ✓ valid outputSpeech
+    Test EmailCheckIntent
+2017-02-27T22:11:18.968Z - info: event.session.application.applicationId=amzn1.ask.skill.8015dfcb-2b86-4c0f-abdf-b6f018c17f2b
+2017-02-27T22:11:18.968Z - debug: Incoming request:
+ {
+  "session": {
+    "new": false,
+    "sessionId": "session1234",
+    "attributes": {},
+    "user": {
+      "userId": "testUsr",
+      "accessToken": "ya29.Glz_A24jL7k4s0NQb1oWY7pqFBGpZFjGg2s4It_z6w-bCuG14SBh2kV8EkfZ4Wx61Ax9YscJTOT_Jizaec1Ttj9hmVY8884ol8CYOnFNHmujbIPUmPWQ6tHC-8I6Qw"
+    },
+    "application": {
+      "applicationId": "amzn1.ask.skill.8015dfcb-2b86-4c0f-abdf-b6f018c17f2b"
+    }
+  },
+  "version": "1.0",
+  "request": {
+    "intent": {
+      "name": "EmailCheckIntent",
+      "slots": {}
+    },
+    "type": "IntentRequest",
+    "requestId": "request5678"
+  }
+}
+2017-02-27T22:11:19.240Z - debug:  
+{ Item: 
+   { pin: '$2a$10$S.oxmo/27MML0GI5fBK25e7UBUR6Zya79VT1M2fwDBtu8PelJgsrC',
+     UsrId: 'testUsr' } }
+2017-02-27T22:11:19.253Z - debug: Final response:
+ {
+  "version": "1.0",
+  "response": {
+    "outputSpeech": {
+      "type": "SSML",
+      "ssml": "<speak>Please tell your secret pin. For example, you can say, my secret pin is 1234. </speak>"
+    },
+    "shouldEndSession": false,
+    "reprompt": {
+      "outputSpeech": {
+        "type": "SSML",
+        "ssml": "<speak>whats your pin? For example, you can say, my secret pin is 3456. </speak>"
+      }
+    }
+  },
+  "sessionAttributes": {
+    "EmailCheckIntent": true,
+    "pin": "$2a$10$S.oxmo/27MML0GI5fBK25e7UBUR6Zya79VT1M2fwDBtu8PelJgsrC"
+  }
+} 
+
+
+      ✓ valid response
+      ✓ valid outputSpeech
+      ✓ valid reprompt
+    Test EmailAuthIntent correct pin
+2017-02-27T22:11:19.255Z - info: event.session.application.applicationId=amzn1.ask.skill.8015dfcb-2b86-4c0f-abdf-b6f018c17f2b
+2017-02-27T22:11:19.255Z - debug: Incoming request:
+ {
+  "session": {
+    "new": false,
+    "sessionId": "session1234",
+    "attributes": {},
+    "user": {
+      "userId": "testUsr",
+      "accessToken": "ya29.Glz_A24jL7k4s0NQb1oWY7pqFBGpZFjGg2s4It_z6w-bCuG14SBh2kV8EkfZ4Wx61Ax9YscJTOT_Jizaec1Ttj9hmVY8884ol8CYOnFNHmujbIPUmPWQ6tHC-8I6Qw"
+    },
+    "application": {
+      "applicationId": "amzn1.ask.skill.8015dfcb-2b86-4c0f-abdf-b6f018c17f2b"
+    }
+  },
+  "version": "1.0",
+  "request": {
+    "intent": {
+      "name": "EmailAuthIntent",
+      "slots": {
+        "CPin": {
+          "name": "CPin",
+          "value": "29592"
+        }
+      }
+    },
+    "type": "IntentRequest",
+    "requestId": "request5678"
+  }
+}
+2017-02-27T22:11:19.255Z - debug: Final response:
+ {
+  "version": "1.0",
+  "response": {
+    "outputSpeech": {
+      "type": "SSML",
+      "ssml": "<speak>Wrong invocation of this intent</speak>"
+    },
+    "shouldEndSession": true
+  }
+} 
+
+
+      1) valid response
+      2) valid outputSpeech
+      3) valid outputSpeech
+    Test AMAZON.YesIntent
+2017-02-27T22:11:19.259Z - info: event.session.application.applicationId=amzn1.ask.skill.8015dfcb-2b86-4c0f-abdf-b6f018c17f2b
+2017-02-27T22:11:19.259Z - debug: Incoming request:
+ {
+  "session": {
+    "new": false,
+    "sessionId": "session1234",
+    "attributes": {},
+    "user": {
+      "userId": "testUsr",
+      "accessToken": "ya29.Glz_A24jL7k4s0NQb1oWY7pqFBGpZFjGg2s4It_z6w-bCuG14SBh2kV8EkfZ4Wx61Ax9YscJTOT_Jizaec1Ttj9hmVY8884ol8CYOnFNHmujbIPUmPWQ6tHC-8I6Qw"
+    },
+    "application": {
+      "applicationId": "amzn1.ask.skill.8015dfcb-2b86-4c0f-abdf-b6f018c17f2b"
+    }
+  },
+  "version": "1.0",
+  "request": {
+    "intent": {
+      "name": "AMAZON.YesIntent",
+      "slots": {}
+    },
+    "type": "IntentRequest",
+    "requestId": "request5678"
+  }
+}
+2017-02-27T22:11:19.260Z - debug: Final response:
+ {
+  "version": "1.0",
+  "response": {
+    "outputSpeech": {
+      "type": "SSML",
+      "ssml": "<speak>Wrong invocation of intent</speak>"
+    },
+    "shouldEndSession": true
+  }
+} 
+
+
+      ✓ valid response
+      4) valid outputSpeech
+    Test EmailAuthIntent wrong pin
+2017-02-27T22:11:19.261Z - info: event.session.application.applicationId=amzn1.ask.skill.8015dfcb-2b86-4c0f-abdf-b6f018c17f2b
+2017-02-27T22:11:19.261Z - debug: Incoming request:
+ {
+  "session": {
+    "new": false,
+    "sessionId": "session1234",
+    "attributes": {},
+    "user": {
+      "userId": "testUsr",
+      "accessToken": "ya29.Glz_A24jL7k4s0NQb1oWY7pqFBGpZFjGg2s4It_z6w-bCuG14SBh2kV8EkfZ4Wx61Ax9YscJTOT_Jizaec1Ttj9hmVY8884ol8CYOnFNHmujbIPUmPWQ6tHC-8I6Qw"
+    },
+    "application": {
+      "applicationId": "amzn1.ask.skill.8015dfcb-2b86-4c0f-abdf-b6f018c17f2b"
+    }
+  },
+  "version": "1.0",
+  "request": {
+    "intent": {
+      "name": "EmailAuthIntent",
+      "slots": {
+        "CPin": {
+          "name": "CPin",
+          "value": "29591"
+        }
+      }
+    },
+    "type": "IntentRequest",
+    "requestId": "request5678"
+  }
+}
+2017-02-27T22:11:19.261Z - debug: Final response:
+ {
+  "version": "1.0",
+  "response": {
+    "outputSpeech": {
+      "type": "SSML",
+      "ssml": "<speak>Wrong invocation of this intent</speak>"
+    },
+    "shouldEndSession": true
+  }
+} 
+
+
+      ✓ valid response
+      5) valid outputSpeech
+
+
+  13 passing (2s)
+  5 failing
+
+  1) All intents Test EmailAuthIntent correct pin valid response:
+     AssertionError: expected true to be false
+      at validRsp (test.js:36:66)
+      at Context.<anonymous> (test.js:222:8)
+
+  2) All intents Test EmailAuthIntent correct pin valid outputSpeech:
+     AssertionError: expected '<speak>Wrong invocation of this intent</speak>' to match /You have total 4 unread mails/
+      at Context.<anonymous> (test.js:226:65)
+
+  3) All intents Test EmailAuthIntent correct pin valid outputSpeech:
+     TypeError: Cannot read property 'outputSpeech' of undefined
+      at Context.<anonymous> (test.js:230:51)
+
+  4) All intents Test AMAZON.YesIntent valid outputSpeech:
+     AssertionError: expected '<speak>Wrong invocation of intent</speak>' to match /Mail from/
+      at Context.<anonymous> (test.js:254:65)
+
+  5) All intents Test EmailAuthIntent wrong pin valid outputSpeech:
+     AssertionError: expected '<speak>Wrong invocation of this intent</speak>' to match /Wrong secret/
+      at Context.<anonymous> (test.js:284:65)
+
+
+

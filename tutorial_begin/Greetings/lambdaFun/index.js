@@ -46,11 +46,16 @@ exports.handler = function(event, context){
 	    		context.succeed(buildResponse(options));
 
 	    	} else if (request.intent.name === "BitchIntent"){
-	    		options.speechText = `Yes, I am your bitch, George!  How can I please my master?`;
+	    		options.speechText = `Yes George, I am your dirty bitch.  How can I please my master?`;
 	    		options.endSession = true;
 	    		context.succeed(buildResponse(options));
 
-	    	} else {
+	    	}  else if (request.intent.name === "HairIntent"){
+	    		options.speechText = `It's brown.  Duh, I'm not an idiot`;
+	    		options.endSession = true;
+	    		context.succeed(buildResponse(options));
+
+	    	}else {
 	    		throw "Unknown intent name";
 	    	}
 

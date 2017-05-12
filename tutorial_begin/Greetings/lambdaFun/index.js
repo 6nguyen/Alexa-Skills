@@ -55,7 +55,12 @@ exports.handler = function(event, context){
 	    		options.endSession = true;
 	    		context.succeed(buildResponse(options));
 
-	    	}else {
+	    	}   else if (request.intent.name === "LookIntent"){
+	    		options.speechText = `George, you already know I think you're very handsome.  I don't know why you ask.`;
+	    		options.endSession = true;
+	    		context.succeed(buildResponse(options));
+
+	    	} else {
 	    		throw "Unknown intent name";
 	    	}
 

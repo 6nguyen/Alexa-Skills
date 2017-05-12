@@ -28,6 +28,7 @@ exports.handler = function(event, context){
 	    		let name = request.intent.slots.FirstName.value;
 	    		options.speechText = "Hey " + name + ". You look good today ";
 	    		options.speechText += getWish(); 
+	    		options.speechText += `Let me drop some <emphasis level="moderate">wisdom</emphasis> on you <break strength = "x-strong"/>`; 
 	    		getQuote(function(quote,err) {
 	    			if (err) {
 	    				context.fail(err);
@@ -37,6 +38,17 @@ exports.handler = function(event, context){
 	    				context.succeed(buildResponse(options));
 	    			}
 	    		}); 
+
+	    	} else if (request.intent.name === "ComplimentIntent"){
+	    		let name = request.intent.slots.FirstName.value;
+	    		options.speechText = `You look amazing ${name}!  Did you do something with your hair?`;
+	    		options.endSession = true;
+	    		context.succeed(buildResponse(options));
+
+	    	} else if (request.intent.name === "BitchIntent"){
+	    		options.speechText = `Yes, I am your bitch, George!  How can I please my master?`;
+	    		options.endSession = true;
+	    		context.succeed(buildResponse(options));
 
 	    	} else {
 	    		throw "Unknown intent name";
@@ -62,8 +74,8 @@ function buildResponse(options){
 		version: "1.0",
 		response: {
 		    outputSpeech: {
-		      type: "PlainText",
-		      text: options.speechText
+		      type: "SSML",
+		      ssml: "<speak>" + options.speechText + "</speak>"
 		    },
 	    	shouldEndSession: options.endSession
 	  	}
@@ -72,8 +84,8 @@ function buildResponse(options){
 	if(options.repromptText){
 		response.response.reprompt = {
 			outputSpeech: {
-				type: "PlainText",
-				text: options.repromptText
+				type: "SSML",
+				ssml: "<speak>"+ options.repromptText + "</speak>"
 			}
 		};
 	}
@@ -81,7 +93,7 @@ function buildResponse(options){
 }
 
 
-function getQuote() {
+function getQuote(callback) {
 	var url = "http://api.forismatic.com/api/1.0/json?method=getQuote&lang=en&format=json";
 	var req = http.get(url, function(res) {
 		var body = "";
@@ -111,10 +123,10 @@ function getWish() {
 		hours = hours+24;
 	}
 	if (hours < 12) {
-		return "on this beautiful morning.";
+		return "on this beautiful morning. ";
 	} else if (hours < 18) {
-		return "on this wonderful afternoon.";
+		return "on this wonderful afternoon. ";
 	} else {
-		return "on this starry night.";
+		return "on this starry night. ";
 	}
 }

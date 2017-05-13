@@ -66,6 +66,12 @@ exports.handler = function(event, context){
 	    		options.endSession = true;
 	    		context.succeed(buildResponse(options));
 
+	    	} else if (request.intent.name==="PotatoIntent"){
+	    		let name = request.intent.slots.FirstName.value;
+	    		options.speechText = `Doesn't ${name} look like a potato?  I think so.`;
+	    		options.endSession = true;
+	    		context.succeed(buildResponse(options));
+
 	    	} else {
 	    		throw "Unknown intent name";
 	    	}

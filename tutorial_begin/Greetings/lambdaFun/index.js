@@ -60,6 +60,12 @@ exports.handler = function(event, context){
 	    		options.endSession = true;
 	    		context.succeed(buildResponse(options));
 
+	    	} else if (request.intent.name==="SecretIntent"){
+	    		let name = request.intent.slots.FirstName.value;
+	    		options.speechText = `I have a secret to tell you.  <amazon:effect name="whispered">I really like your friend ${name}</amazon:effect>`;
+	    		options.endSession = true;
+	    		context.succeed(buildResponse(options));
+
 	    	} else {
 	    		throw "Unknown intent name";
 	    	}

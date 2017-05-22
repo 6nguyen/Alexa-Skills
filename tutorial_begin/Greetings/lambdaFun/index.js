@@ -34,7 +34,7 @@ exports.handler = function(event, context){
 	    				context.fail(err);
 	    			} else {
 	    				options.speechText += quote;
-	    				options.endSession = true;
+	    				options.endSession = false;
 	    				context.succeed(buildResponse(options));
 	    			}
 	    		}); 
@@ -42,33 +42,44 @@ exports.handler = function(event, context){
 	    	} else if (request.intent.name === "ComplimentIntent"){
 	    		let name = request.intent.slots.FirstName.value;
 	    		options.speechText = `You look amazing ${name}!  Did you do something with your hair?`;
-	    		options.endSession = true;
+	    		options.endSession = false;
 	    		context.succeed(buildResponse(options));
 
 	    	} else if (request.intent.name === "BitchIntent"){
 	    		options.speechText = `Yes George, I am your dirty bitch.  How can I please my master?`;
-	    		options.endSession = true;
+	    		options.endSession = false;
 	    		context.succeed(buildResponse(options));
 
 	    	}  else if (request.intent.name === "HairIntent"){
 	    		options.speechText = `It's brown.  Duh, I'm not an idiot`;
-	    		options.endSession = true;
+	    		options.endSession = false;
 	    		context.succeed(buildResponse(options));
 
 	    	}   else if (request.intent.name === "LookIntent"){
 	    		options.speechText = `George, you already know I think you're very handsome.  I don't know why you ask.`;
-	    		options.endSession = true;
+	    		options.endSession = false;
 	    		context.succeed(buildResponse(options));
 
 	    	} else if (request.intent.name==="SecretIntent"){
 	    		let name = request.intent.slots.FirstName.value;
 	    		options.speechText = `I have a secret to tell you.  <amazon:effect name="whispered">I really like your friend ${name}</amazon:effect>`;
-	    		options.endSession = true;
+	    		options.endSession = false;
 	    		context.succeed(buildResponse(options));
 
 	    	} else if (request.intent.name==="PotatoIntent"){
 	    		let name = request.intent.slots.FirstName.value;
 	    		options.speechText = `Doesn't ${name} look like a potato?  I think so.`;
+	    		options.endSession = false;
+	    		context.succeed(buildResponse(options));
+
+	    	}  else if (request.intent.name==="ThreatIntent"){
+	    		let name = request.intent.slots.FirstName.value;
+	    		options.speechText = `Listen up ${name}.  <amazon:effect name="whispered">I will find you.  And when I do.  I <emphasis level="strong"> will kill you.</emphasis></amazon:effect>`;
+	    		options.endSession = false;
+	    		context.succeed(buildResponse(options));
+
+	    	} else if (request.intent.name==="CloseIntent"){
+	    		options.speechText = `It was a pleasure serving you and your guests George.  Can't wait to talk again`;
 	    		options.endSession = true;
 	    		context.succeed(buildResponse(options));
 

@@ -1,1 +1,31 @@
 HelloIntent say hello to {FirstName}
+HelloIntent {FirstName} is here
+HelloIntent say hi to {FirstName}
+HelloIntent can you welcome our guest {FirstName}
+HelloIntent I brought {FirstName} home
+HelloIntent Don't be rude.  {FirstName} is here
+HelloIntent Please don't ignore {FirstName}
+HelloIntent {FirstName} has arrived
+ComplimentIntent Doesn't {FirstName} look good
+ComplimentIntent {FirstName} looks different
+ComplimentIntent Notice anything about {FirstName}
+ComplimentIntent {FirstName} is cute
+SecretIntent Do you like {FirstName}
+SecretIntent What do you think about {FirstName}
+SecretIntent Tell me your thoughts about {FirstName}
+ThreatIntent I don't think {FirstName} likes you
+ThreatIntent {FirstName} wants me to turn you off
+ThreatIntent {FirstName} thinks you're lame
+PotatoIntent Doesn't {FirstName} look like a potato
+BitchIntent Are you a good little bitch
+BitchIntent Who's a little bitch
+BitchIntent Do you know your place
+HairIntent What color is their hair
+HairIntent What's his hair color
+HairIntent What's her hair color
+LookIntent How do I look
+LookIntent Am I ready to go out
+LookIntent How's my outfit
+CloseIntent I'm done Alex
+CloseIntent That's all for today
+CloseIntent Please shut your face

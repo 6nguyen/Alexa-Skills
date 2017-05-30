@@ -7,6 +7,7 @@ var http = require("http");
 exports.handler = function(event, context){
 	try {
 		var request = event.request;
+		var session = event.session;
 
 		/*
 		1) 3 types of requests
@@ -15,73 +16,34 @@ exports.handler = function(event, context){
 	    iii) SessionEndedRequest Ex: "exit" or error or timeout 
 	    */
 	    if (request.type === "LaunchRequest") {
-	    	let options = {};
-	    	options.speechText = "Welcome to Greetings skill. Does anyone need a warm welcome?",
-	    	options.repromptText= "You can say, John is here.",
-	    	options.endSession= false;
-	    	context.succeed(buildResponse(options));
-	    } 
-	    else if (request.type === "IntentRequest") {
-	    	let options = {};
+	    	handleLaunchRequest(context);
+	    } else if (request.type === "IntentRequest") {
 
 	    	if (request.intent.name === "HelloIntent"){
-	    		let name = request.intent.slots.FirstName.value;
-	    		options.speechText = "Hey " + name + ". You look good today ";
-	    		options.speechText += getWish(); 
-	    		options.speechText += `Let me drop some <emphasis level="moderate">wisdom</emphasis> on you <break strength = "x-strong"/>`; 
-	    		getQuote(function(quote,err) {
-	    			if (err) {
-	    				context.fail(err);
-	    			} else {
-	    				options.speechText += quote;
-	    				options.endSession = false;
-	    				context.succeed(buildResponse(options));
-	    			}
-	    		}); 
-
+	    		 handleHelloIntent(request, context);
 	    	} else if (request.intent.name === "ComplimentIntent"){
-	    		let name = request.intent.slots.FirstName.value;
-	    		options.speechText = `You look amazing ${name}!  Did you do something with your hair?`;
-	    		options.endSession = false;
-	    		context.succeed(buildResponse(options));
+	    		handleComplimentIntent(request, context);
 
 	    	} else if (request.intent.name === "BitchIntent"){
-	    		options.speechText = `Yes George, I am your dirty bitch.  How can I please my master?`;
-	    		options.endSession = false;
-	    		context.succeed(buildResponse(options));
+	    		handleBitchIntent(context);
 
 	    	}  else if (request.intent.name === "HairIntent"){
-	    		options.speechText = `It's brown.  Duh, I'm not an idiot`;
-	    		options.endSession = false;
-	    		context.succeed(buildResponse(options));
+	    		handleHairIntent(context);
 
 	    	}   else if (request.intent.name === "LookIntent"){
-	    		options.speechText = `George, you already know I think you're very handsome.  I don't know why you ask.`;
-	    		options.endSession = false;
-	    		context.succeed(buildResponse(options));
+	    		handleLookIntent(context);
 
 	    	} else if (request.intent.name==="SecretIntent"){
-	    		let name = request.intent.slots.FirstName.value;
-	    		options.speechText = `I have a secret to tell you.  <amazon:effect name="whispered">I really like your friend ${name}</amazon:effect>`;
-	    		options.endSession = false;
-	    		context.succeed(buildResponse(options));
+	    		handleSecretIntent(request, context);
 
 	    	} else if (request.intent.name==="PotatoIntent"){
-	    		let name = request.intent.slots.FirstName.value;
-	    		options.speechText = `Doesn't ${name} look like a potato?  I think so.`;
-	    		options.endSession = false;
-	    		context.succeed(buildResponse(options));
+	    		handlePotatoIntent(request, context);
 
 	    	}  else if (request.intent.name==="ThreatIntent"){
-	    		let name = request.intent.slots.FirstName.value;
-	    		options.speechText = `Listen up ${name}.  <amazon:effect name="whispered">I will find you.  And when I do.  I <emphasis level="strong"> will kill you.</emphasis></amazon:effect>`;
-	    		options.endSession = false;
-	    		context.succeed(buildResponse(options));
+	    		handleThreatIntent(request, context);
 
 	    	} else if (request.intent.name==="CloseIntent"){
-	    		options.speechText = `It was a pleasure serving you and your guests George.  Can't wait to talk again`;
-	    		options.endSession = true;
-	    		context.succeed(buildResponse(options));
+	    		handleCloseIntent(context);
 
 	    	} else {
 	    		throw "Unknown intent name";
@@ -162,4 +124,91 @@ function getWish() {
 	} else {
 		return "on this starry night. ";
 	}
+}
+
+
+// Intent Handler code
+function handleLaunchRequest(context){
+	let options = {};
+	options.speechText = "Welcome to Greetings skill. Does anyone need a warm welcome?",
+	options.repromptText= "You can say, John is here.",
+	options.endSession= false;
+	context.succeed(buildResponse(options));
+}
+
+function handleHelloIntent(request, context) {
+	let name = request.intent.slots.FirstName.value;
+	options.speechText = "Hey " + name + ". You look good today ";
+	options.speechText += getWish(); 
+	options.speechText += `Let me drop some <emphasis level="moderate">wisdom</emphasis> on you <break strength = "x-strong"/>`; 
+	getQuote(function(quote,err) {
+		if (err) {
+			context.fail(err);
+		} else {
+			options.speechText += quote;
+			options.endSession = false;
+			context.succeed(buildResponse(options));
+		}
+	});
+}
+
+function handleComplimentIntent(request, context){
+	let options = {};
+	let name = request.intent.slots.FirstName.value;
+	options.speechText = `You look amazing ${name}!  Did you do something with your hair?`;
+	options.endSession = false;
+	context.succeed(buildResponse(options));
+}
+
+function handleSecretIntent(request, context){
+	let options = {};
+	let name = request.intent.slots.FirstName.value;
+	options.speechText = `I have a secret to tell you.  <amazon:effect name="whispered">I really like your friend ${name}</amazon:effect>`;
+	options.endSession = false;
+	context.succeed(buildResponse(options));
+}
+
+function handlePotatoIntent(request, context){
+	let options = {};
+	let name = request.intent.slots.FirstName.value;
+	options.speechText = `Doesn't ${name} look like a potato?  I think so.`;
+	options.endSession = false;
+	context.succeed(buildResponse(options));
+}
+
+function handleThreatIntent(request, context){
+	let options = {};
+	let name = request.intent.slots.FirstName.value;
+	options.speechText = `Listen up ${name}.  <amazon:effect name="whispered">I will find you.  And when I do.  I <emphasis level="strong"> will kill you.</emphasis></amazon:effect>`;
+	options.endSession = false;
+	context.succeed(buildResponse(options));
+}
+
+function handleBitchIntent(context){
+	let options = {};
+
+	options.speechText = `Yes George, I am your dirty bitch.  How can I please my master?`;
+	options.endSession = false;
+	context.succeed(buildResponse(options));
+}
+
+function handleHairIntent(context){
+	let options = {};
+	options.speechText = `It's brownish black.  Duh, I'm not an idiot`;
+	options.endSession = false;
+	context.succeed(buildResponse(options));
+}
+
+function handleLookIntent(context){
+	let options = {};
+	options.speechText = `George, you already know I think you're very handsome.  I don't know why you ask.`;
+	options.endSession = false;
+	context.succeed(buildResponse(options));
+}
+
+function handleCloseIntent(context){
+	let options = {};
+	options.speechText = `It was a pleasure serving you and your guests George.  Can't wait to talk again`;
+	options.endSession = true;
+	context.succeed(buildResponse(options));
 }

@@ -16,6 +16,13 @@ SecretIntent Tell me your thoughts about {FirstName}
 ThreatIntent I don't think {FirstName} likes you
 ThreatIntent {FirstName} wants me to turn you off
 ThreatIntent {FirstName} thinks you're lame
+QuoteIntent Can you give me some advice
+QuoteIntent I'd like some advice
+QuoteIntent Can you offer me some wisdom
+NextQuoteIntent Tell me one more
+NextQuoteIntent Yes please
+NextQuoteIntent Let's hear another
+NextQuoteIntent Last one
 PotatoIntent Doesn't {FirstName} look like a potato
 BitchIntent Are you a good little bitch
 BitchIntent Who's a little bitch
@@ -26,6 +33,6 @@ HairIntent What's her hair color
 LookIntent How do I look
 LookIntent Am I ready to go out
 LookIntent How's my outfit
-CloseIntent I'm done Alex
+CloseIntent I'm done Alexa
 CloseIntent That's all for today
 CloseIntent Please shut your face

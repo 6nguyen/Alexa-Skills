@@ -1,13 +1,61 @@
 {
-  "intents":[
+  "intents": [
     {
-      "intent" : "HelloIntent",
-      "slots" : [
+      "slots": [
         {
           "name": "FirstName",
-          "type": "GUEST_NAMES"
+          "type": "AMAZON.US_FIRST_NAME"
         }
-      ]
+      ],
+      "intent": "HelloIntent"
+    },
+    {
+      "slots": [
+        {
+          "name": "FirstName",
+          "type": "AMAZON.US_FIRST_NAME"
+        }
+      ],
+      "intent": "ComplimentIntent"
+    },
+    {
+      "slots": [
+        {
+          "name": "FirstName",
+          "type": "AMAZON.US_FIRST_NAME"
+        }
+      ],
+      "intent": "SecretIntent"
+    },
+    {
+      "slots": [
+        {
+          "name": "FirstName",
+          "type": "AMAZON.US_FIRST_NAME"
+        }
+      ],
+      "intent": "ThreatIntent"
+    },
+    {
+      "slots": [
+        {
+          "name": "FirstName",
+          "type": "AMAZON.US_FIRST_NAME"
+        }
+      ],
+      "intent": "PotatoIntent"
+    },
+    {
+      "intent": "BitchIntent"
+    },
+    {
+      "intent": "HairIntent"
+    },
+    {
+      "intent": "LookIntent"
+    },
+    {
+      "intent": "CloseIntent"
     }
   ]
 }

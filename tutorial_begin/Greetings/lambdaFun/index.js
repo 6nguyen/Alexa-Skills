@@ -159,6 +159,7 @@ function handleLaunchRequest(context){
 }
 
 function handleHelloIntent(request, context) {
+	let options = {};
 	let name = request.intent.slots.FirstName.value;
 	options.speechText = "Hey " + name + ". You look good today ";
 	options.speechText += getWish(); 
@@ -259,11 +260,11 @@ function handleNextQuoteIntent(request, context, session) {
 	options.session = session;
 
 	if (session.attributes.QuoteIntent) {
-		getQuote(function(quote(err){
+		getQuote(function(quote,err){
 		if (err) {
 			context.fail(err);
 		} else {
-			options.speechText = quote:
+			options.speechText = quote;
 			options.speechText += " How about one more quote?";
 			options.repromptText = " You can say. yes.  or more."
 			options.endSession = false;

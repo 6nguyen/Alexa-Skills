@@ -9,6 +9,10 @@ exports.handler = function(event, context){
 		var request = event.request;
 		var session = event.session;
 
+		if (!event.session.attributes) {
+			event.session.attributes = {};
+		}
+
 		/*
 		1) 3 types of requests
 	    i)   LaunchRequest       Ex: "Open greeter"
@@ -21,6 +25,7 @@ exports.handler = function(event, context){
 
 	    	if (request.intent.name === "HelloIntent"){
 	    		 handleHelloIntent(request, context);
+
 	    	} else if (request.intent.name === "ComplimentIntent"){
 	    		handleComplimentIntent(request, context);
 
@@ -41,6 +46,18 @@ exports.handler = function(event, context){
 
 	    	}  else if (request.intent.name==="ThreatIntent"){
 	    		handleThreatIntent(request, context);
+
+	    	} else if (request.intent.name==="QuoteIntent"){
+	    		handleQuoteIntent(request, context, session);
+
+	    	} else if (request.intent.name==="NextQuoteIntent"){
+	    		handleNextQuoteIntent(request, context, session);
+
+	    	} else if (request.intent.name==="AMAZON.StopIntent" || request.intent.name==="AMAZON.CancelIntent"){
+	    		context.succeed(buildResponse({
+	    			speechText: "Good bye.",
+	    			endSession: true
+	    		}));
 
 	    	} else if (request.intent.name==="CloseIntent"){
 	    		handleCloseIntent(context);
@@ -84,6 +101,11 @@ function buildResponse(options){
 			}
 		};
 	}
+
+	if (options.session && options.session.attributes){
+		response.sessionAttributes = options.session.attributes;
+	}
+
 	return response;
 }
 
@@ -211,4 +233,45 @@ function handleCloseIntent(context){
 	options.speechText = `It was a pleasure serving you and your guests George.  Can't wait to talk again`;
 	options.endSession = true;
 	context.succeed(buildResponse(options));
+}
+
+function handleQuoteIntent(request, context, session){
+	let options = {};
+	options.session = session;
+
+	getQuote(function(quote, err) {
+		if (err) {
+			context.fail(err);
+		} else {
+			options.speechText = quote;
+			options.speechText += " Would you like to hear another quote?";
+			options.repromptText = "You can say. yes. or more. ";
+			options.session.attributes.QuoteIntent = true;
+			options.endSession = false;
+			context.succeed(buildResponse(options));
+		}
+	});
+	
+}
+
+function handleNextQuoteIntent(request, context, session) {
+	let options = {};
+	options.session = session;
+
+	if (session.attributes.QuoteIntent) {
+		getQuote(function(quote(err){
+		if (err) {
+			context.fail(err);
+		} else {
+			options.speechText = quote:
+			options.speechText += " How about one more quote?";
+			options.repromptText = " You can say. yes.  or more."
+			options.endSession = false;
+			context.succeed(buildResponse(options));
+		}
+		});
+	} else {
+		options.speechText = "Wrong invocation of this intent. ";
+		options.endSession = true;
+	}
 }

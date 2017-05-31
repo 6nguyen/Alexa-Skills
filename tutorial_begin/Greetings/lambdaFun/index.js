@@ -6,9 +6,13 @@ var http = require("http");
 // export it so it's visible to the lambda service
 exports.handler = function(event, context){
 	try {
+		console.log("Request: \n" + JSON.stringify(event, null, 2));
+
 		var request = event.request;
 		var session = event.session;
 
+		// if any intent contains a follow-up intent, must use this.
+		// intent handlers must use session as an argument (see handlers below)
 		if (!event.session.attributes) {
 			event.session.attributes = {};
 		}
@@ -80,7 +84,7 @@ exports.handler = function(event, context){
 
 // function to extract JSON response
 // version and response copied from response.json file
-// Remove sessionAttributes, card, and reprompt
+// Remove sessionAttributes and reprompt from response since we're not using them
 function buildResponse(options){
 	var response = {
 		version: "1.0",
@@ -100,6 +104,24 @@ function buildResponse(options){
 				ssml: "<speak>"+ options.repromptText + "</speak>"
 			}
 		};
+	}
+
+// if response has a card, create a Simple card
+	if (options.cardTitle) {
+		response.response.card = {
+			type: "Simple",
+			title: options.cardTitle
+		}
+		if (options.imageUrl) {
+			response.response.card.type = "Standard";
+			response.response.card.text = options.cardContent;
+			response.response.card.image = {
+				smallImageUrl: options.imageUrl,
+				largeImageUrl: options.imageUrl
+			};
+		} else {
+			response.response.card.content = options.cardContent;
+		}
 	}
 
 	if (options.session && options.session.attributes){
@@ -164,11 +186,19 @@ function handleHelloIntent(request, context) {
 	options.speechText = "Hey " + name + ". You look good today ";
 	options.speechText += getWish(); 
 	options.speechText += `Let me drop some <emphasis level="moderate">wisdom</emphasis> on you <break strength = "x-strong"/>`; 
+	// Create card title
+	options.cardTitle = `Hey ${name}!`;
+	
 	getQuote(function(quote,err) {
 		if (err) {
 			context.fail(err);
 		} else {
 			options.speechText += quote;
+			// create card content and image
+			options.cardContent = quote;
+			//options.imageUrl = "https://c1.staticflickr.com/2/1542/23814666953_51c735fe74_b.jpg";
+			options.imageUrl = "https://s-media-cache-ak0.pinimg.com/736x/db/1a/1a/db1a1a6acacd20cbd1bdaaec26b46f12.jpg";
+
 			options.endSession = false;
 			context.succeed(buildResponse(options));
 		}
@@ -272,8 +302,9 @@ function handleNextQuoteIntent(request, context, session) {
 		}
 		});
 	} else {
-		options.speechText = "Wrong invocation of this intent. ";
-		options.endSession = true;
+		options.speechText = "I haven't even told you a quote yet though";
+		
 		context.succeed(buildResponse(options));
+		options.endSession = true;
 	}
 }

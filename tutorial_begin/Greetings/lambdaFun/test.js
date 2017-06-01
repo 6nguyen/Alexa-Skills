@@ -171,6 +171,7 @@ describe('All intents', function() {
 
        // Check if outputSpeech matches expected outputSpeech
        // use .*value as a slot value placeholder
+       // ssml mark ups must be included (ie, <amazon:effect name="whispered">...</amazon:effect>) 
        it('valid outputSpeech', function() {
         expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/Hey .*Tiffany. You look good today/);
        });
@@ -272,5 +273,35 @@ describe('All intents', function() {
 
     });
 
+
+    // test case for ThreatIntent
+    describe(`Test ThreatIntent`, function() {
+
+        before(function(done) {
+          event.request.intent = {};
+          event.session.attributes = {};
+          event.request.type = 'IntentRequest';
+          event.request.intent.name = 'ThreatIntent';
+          event.request.intent.slots = {
+            FirstName: {
+              name: 'FirstName',
+              value: 'Tiffany'
+            }
+          };
+          ctx.done = done;
+          lambdaToTest.handler(event , ctx);
+        });
+
+       it('valid response', function() {
+         validRsp(ctx, {
+           endSession: false
+         });
+       });
+
+       it('valid outputSpeech', function() {
+        expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/Listen up .*Tiffany. /);
+       });
+
+    });
 
 });

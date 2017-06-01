@@ -49,6 +49,7 @@ function validRsp(ctx,options) {
 }
 
 // Template checks if cards are valid
+// image url's must be https enabled
 function validCard(ctx, standardCard) {
      expect(ctx.speechResponse.response.card).not.to.be.undefined;
      expect(ctx.speechResponse.response.card.title).not.to.be.undefined;
@@ -96,13 +97,18 @@ var event = {
 
 
 
-
+// Tests all intents in one go
+// mocha test framework has a describe log to add test cases
 describe('All intents', function() {
+  // ctx object holds the response
   var ctx = new Context();
 
+  // test case for LaunchRequest
+  describe('Test LaunchRequest', function() {
 
-  describe('Test LaunchIntent', function() {
-
+      //  before testing any cases, invokes lambda function to have our response ready to add test cases
+      // clearing intent and session attributes because the Launch Intent has no intent or session attributes
+      // ctx.done called only when we are finished with our lambda function
       before(function(done) {
         event.request.type = 'LaunchRequest';
         event.request.intent = {};
@@ -111,23 +117,28 @@ describe('All intents', function() {
         lambdaToTest.handler(event , ctx);
       });
 
-
+    // it blocks are individual checks
+    // this block checks for a valid response
      it('valid response', function() {
        validRsp(ctx,{
          endSession: false,
        });
      });
 
-     //it('valid outputSpeech', function() {
-     //  expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/<speak>Hi,.*<\/speak>/);
-     //});
+     // this block checks if outputSpeech matches expected outputSpeech
+     // in this case, for LaunchRequest
+     it('valid outputSpeech', function() {
+      expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/Welcome to Greetings skill/);
+     });
     
-     //it('valid repromptSpeech', function() {
-     //  expect(ctx.speechResponse.response.reprompt.outputSpeech.ssml).to.match(/<speak>For example.*<\/speak>/);
-     //});
+    // this block checks if repromptSpeech matches expected repromptSpeech (for LaunchRequest)
+     it('valid repromptSpeech', function() {
+      expect(ctx.speechResponse.response.reprompt.outputSpeech.ssml).to.match(/You can say/);
+     });
 
   });
 
+// Test cases for all the intents
     describe(`Test TBDIntentName`, function() {
 
         before(function(done) {

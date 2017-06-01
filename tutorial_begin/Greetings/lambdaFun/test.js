@@ -41,9 +41,11 @@ function validRsp(ctx,options) {
        expect(ctx.speechResponse.response.reprompt).to.be.undefined;
      } else {
        expect(ctx.speechResponse.response.shouldEndSession).to.be.false;
-       expect(ctx.speechResponse.response.reprompt.outputSpeech).to.be.not.undefined;
-       expect(ctx.speechResponse.response.reprompt.outputSpeech.type).to.be.equal('SSML');
-       expect(ctx.speechResponse.response.reprompt.outputSpeech.ssml).to.match(/<speak>.*<\/speak>/);
+       if (options.outputSpeech) {
+         expect(ctx.speechResponse.response.reprompt.outputSpeech).not.to.be.undefined;
+         expect(ctx.speechResponse.response.reprompt.outputSpeech.type).to.be.equal('SSML');
+         expect(ctx.speechResponse.response.reprompt.outputSpeech.ssml).to.match(/<speak>.*<\/speak>/);
+        }
      }
 
 }
@@ -161,7 +163,7 @@ describe('All intents', function() {
       // endSession: true because we expect the response to end (not to end the Alexa Skill)
        it('valid response', function() {
          validRsp(ctx, {
-           endSession: true
+           endSession: false
          });
        });
 

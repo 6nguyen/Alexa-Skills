@@ -32,7 +32,7 @@ function validRsp(ctx,options) {
      expect(ctx.speechResponse.response).not.to.be.undefined;
      expect(ctx.speechResponse.response.outputSpeech).not.to.be.undefined;
      // .to.be.equal('Plain Text'); if Alexa Skill uses plain text output speech type instead of SSML
-     // next two lines should be changed accordingly to output speech type
+     // next three lines should be changed accordingly to output speech type
      expect(ctx.speechResponse.response.outputSpeech.type).to.be.equal('SSML');
      expect(ctx.speechResponse.response.outputSpeech.ssml).not.to.be.undefined;
      expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/<speak>.*<\/speak>/);
@@ -125,7 +125,7 @@ describe('All intents', function() {
        });
      });
 
-     // this block checks if outputSpeech matches expected outputSpeech
+     // this block checks if outputSpeech matches expected outputSpeech.  Can use partial output or full output
      // in this case, for LaunchRequest
      it('valid outputSpeech', function() {
       expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/Welcome to Greetings skill/);
@@ -139,32 +139,37 @@ describe('All intents', function() {
   });
 
 // Test cases for all the intents
-    describe(`Test TBDIntentName`, function() {
+    describe(`Test HelloIntent`, function() {
 
         before(function(done) {
           event.request.intent = {};
           event.session.attributes = {};
           event.request.type = 'IntentRequest';
-          event.request.intent.name = 'TBDIntentName';
+          event.request.intent.name = 'HelloIntent';
           event.request.intent.slots = {
-            TBDSlotName: {
-              name: 'TBDSlotName',
-              value: 'TBDValue'
+            // Slot Name, can be found in event.json
+            FirstName: {
+              name: 'FirstName',
+              value: 'Tiffany'
             }
           };
           ctx.done = done;
           lambdaToTest.handler(event , ctx);
         });
 
+      // Call validRsp function to check if response is valid
+      // endSession: true because we expect the response to end (not to end the Alexa Skill)
        it('valid response', function() {
          validRsp(ctx, {
-           endSession: TBD
+           endSession: true
          });
        });
 
-       //it('valid outputSpeech', function() {
-       //  expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/<speak>Hi,.*<\/speak>/);
-       //});
+       // Check if outputSpeech matches expected outputSpeech
+       // use .*value as a slot value placeholder
+       it('valid outputSpeech', function() {
+        expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/Hey .*Tiffany. You look good today/);
+       });
     
        //it('valid repromptSpeech', function() {
        //  expect(ctx.speechResponse.response.reprompt.outputSpeech.ssml).to.match(/<speak>For example.*<\/speak>/);

@@ -169,9 +169,10 @@ describe('All intents', function() {
          });
        });
 
-       // Check if outputSpeech matches expected outputSpeech
+       // Check if outputSpeech PERFECTLY matches expected outputSpeech
        // use .*value as a slot value placeholder
-       // ssml mark ups must be included (ie, <amazon:effect name="whispered">...</amazon:effect>) 
+       // ssml mark ups must match (ie, <amazon:effect name="whispered">...</amazon:effect>)
+       // white space must match
        it('valid outputSpeech', function() {
         expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/Hey .*Tiffany. You look good today/);
        });
@@ -354,6 +355,33 @@ describe('All intents', function() {
        });
 
     });
+
+
+    // test case for LookIntent
+    describe(`Test LookIntent`, function() {
+
+        before(function(done) {
+          event.request.intent = {};
+          event.session.attributes = {};
+          event.request.type = 'IntentRequest';
+          event.request.intent.name = 'LookIntent';
+          event.request.intent.slots = {};
+          ctx.done = done;
+          lambdaToTest.handler(event , ctx);
+        });
+
+       it('valid response', function() {
+         validRsp(ctx, {
+           endSession: false
+         });
+       });
+
+       it('valid outputSpeech', function() {
+        expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/George, you already know /);
+       });
+
+    });
+
 
 
 });

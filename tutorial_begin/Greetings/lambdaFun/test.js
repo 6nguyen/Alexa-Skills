@@ -383,5 +383,31 @@ describe('All intents', function() {
     });
 
 
+    // test case for CloseIntent
+    describe(`Test CloseIntent`, function() {
+
+        before(function(done) {
+          event.request.intent = {};
+          event.session.attributes = {};
+          event.request.type = 'IntentRequest';
+          event.request.intent.name = 'CloseIntent';
+          event.request.intent.slots = {};
+          ctx.done = done;
+          lambdaToTest.handler(event , ctx);
+        });
+
+       it('valid response', function() {
+         validRsp(ctx, {
+           endSession: true
+         });
+       });
+
+       it('valid outputSpeech', function() {
+        expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/It was a pleasure serving you/);
+       });
+
+    });
+
+
 
 });

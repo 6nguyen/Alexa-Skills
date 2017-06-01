@@ -140,7 +140,9 @@ describe('All intents', function() {
 
   });
 
-// Test cases for all the intents
+// TEST CASES FOR ALL INTENTS *********************************************
+    
+    // test case for HelloIntent
     describe(`Test HelloIntent`, function() {
 
         before(function(done) {
@@ -179,5 +181,43 @@ describe('All intents', function() {
 
     });
 
+    // test case for ComplimentIntent
+    describe(`Test ComplimentIntent`, function() {
+
+        before(function(done) {
+          event.request.intent = {};
+          event.session.attributes = {};
+          event.request.type = 'IntentRequest';
+          event.request.intent.name = 'ComplimentIntent';
+          event.request.intent.slots = {
+            // Slot Name, can be found in event.json
+            FirstName: {
+              name: 'FirstName',
+              value: 'Tiffany'
+            }
+          };
+          ctx.done = done;
+          lambdaToTest.handler(event , ctx);
+        });
+
+      // Call validRsp function to check if response is valid
+      // endSession: true because we expect the response to end (not to end the Alexa Skill)
+       it('valid response', function() {
+         validRsp(ctx, {
+           endSession: false
+         });
+       });
+
+       // Check if outputSpeech matches expected outputSpeech
+       // use .*value as a slot value placeholder
+       it('valid outputSpeech', function() {
+        expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/You look amazing/);
+       });
+    
+       //it('valid repromptSpeech', function() {
+       //  expect(ctx.speechResponse.response.reprompt.outputSpeech.ssml).to.match(/<speak>For example.*<\/speak>/);
+       //});
+
+    });
 
 });

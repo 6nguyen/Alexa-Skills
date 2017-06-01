@@ -6,8 +6,9 @@ var http = require("http");
 // export it so it's visible to the lambda service
 exports.handler = function(event, context){
 	try {
-		console.log("Request: \n" + JSON.stringify(event, null, 2));
-
+		if (process.env.NODE_DEBUG_EN){
+			console.log("Request: \n" + JSON.stringify(event, null, 2));
+		}
 		var request = event.request;
 		var session = event.session;
 
@@ -86,6 +87,10 @@ exports.handler = function(event, context){
 // version and response copied from response.json file
 // Remove sessionAttributes and reprompt from response since we're not using them
 function buildResponse(options){
+	if (process.env.NODE_DEBUG_EN){
+		console.log("buildResponse options: \n" + JSON.stringify(options,null,2));
+	}
+
 	var response = {
 		version: "1.0",
 		response: {
@@ -126,6 +131,10 @@ function buildResponse(options){
 
 	if (options.session && options.session.attributes){
 		response.sessionAttributes = options.session.attributes;
+	}
+
+	if (process.env.NODE_DEBUG_EN){
+		console.log("Response: \n" + JSON.stringify(response, null, 2));
 	}
 
 	return response;

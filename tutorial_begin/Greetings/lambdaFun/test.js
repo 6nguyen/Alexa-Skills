@@ -162,7 +162,7 @@ describe('All intents', function() {
         });
 
       // Call validRsp function to check if response is valid
-      // endSession: true because we expect the response to end (not to end the Alexa Skill)
+      // endSession: false because we expect the response to stay open
        it('valid response', function() {
          validRsp(ctx, {
            endSession: false
@@ -174,10 +174,11 @@ describe('All intents', function() {
        it('valid outputSpeech', function() {
         expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/Hey .*Tiffany. You look good today/);
        });
-    
-       //it('valid repromptSpeech', function() {
-       //  expect(ctx.speechResponse.response.reprompt.outputSpeech.ssml).to.match(/<speak>For example.*<\/speak>/);
-       //});
+
+       // Check if repromptSpeech matches expected repromptSpeech (Edited out because this is template)
+       // it('valid repromptSpeech', function() {
+       //  expect(ctx.speechResponse.response.reprompt.outputSpeech.ssml).to.match(/.*/);
+       // });
 
     });
 
@@ -190,7 +191,6 @@ describe('All intents', function() {
           event.request.type = 'IntentRequest';
           event.request.intent.name = 'ComplimentIntent';
           event.request.intent.slots = {
-            // Slot Name, can be found in event.json
             FirstName: {
               name: 'FirstName',
               value: 'Tiffany'
@@ -200,23 +200,15 @@ describe('All intents', function() {
           lambdaToTest.handler(event , ctx);
         });
 
-      // Call validRsp function to check if response is valid
-      // endSession: true because we expect the response to end (not to end the Alexa Skill)
        it('valid response', function() {
          validRsp(ctx, {
            endSession: false
          });
        });
 
-       // Check if outputSpeech matches expected outputSpeech
-       // use .*value as a slot value placeholder
        it('valid outputSpeech', function() {
         expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/You look amazing/);
        });
-    
-       //it('valid repromptSpeech', function() {
-       //  expect(ctx.speechResponse.response.reprompt.outputSpeech.ssml).to.match(/<speak>For example.*<\/speak>/);
-       //});
 
     });
 
@@ -229,7 +221,6 @@ describe('All intents', function() {
           event.request.type = 'IntentRequest';
           event.request.intent.name = 'SecretIntent';
           event.request.intent.slots = {
-            // Slot Name, can be found in event.json
             FirstName: {
               name: 'FirstName',
               value: 'Tiffany'
@@ -239,24 +230,47 @@ describe('All intents', function() {
           lambdaToTest.handler(event , ctx);
         });
 
-      // Call validRsp function to check if response is valid
-      // endSession: true because we expect the response to end (not to end the Alexa Skill)
        it('valid response', function() {
          validRsp(ctx, {
            endSession: false
          });
        });
 
-       // Check if outputSpeech matches expected outputSpeech
-       // use .*value as a slot value placeholder
        it('valid outputSpeech', function() {
         expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/I have a secret to tell you/);
        });
-    
-       //it('valid repromptSpeech', function() {
-       //  expect(ctx.speechResponse.response.reprompt.outputSpeech.ssml).to.match(/<speak>For example.*<\/speak>/);
-       //});
 
     });
+
+    // test case for PotatoIntent
+    describe(`Test PotatoIntent`, function() {
+
+        before(function(done) {
+          event.request.intent = {};
+          event.session.attributes = {};
+          event.request.type = 'IntentRequest';
+          event.request.intent.name = 'PotatoIntent';
+          event.request.intent.slots = {
+            FirstName: {
+              name: 'FirstName',
+              value: 'Tiffany'
+            }
+          };
+          ctx.done = done;
+          lambdaToTest.handler(event , ctx);
+        });
+
+       it('valid response', function() {
+         validRsp(ctx, {
+           endSession: false
+         });
+       });
+
+       it('valid outputSpeech', function() {
+        expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/Doesn't .*Tiffany look like/);
+       });
+
+    });
+
 
 });

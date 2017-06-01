@@ -6,6 +6,9 @@ var http = require("http");
 // export it so it's visible to the lambda service
 exports.handler = function(event, context){
 	try {
+
+		// if NODE_DEBUG_EN =1, then print request, options, and response
+		// 'env NODE_DEBUG_EN = 1' 
 		if (process.env.NODE_DEBUG_EN){
 			console.log("Request: \n" + JSON.stringify(event, null, 2));
 		}
@@ -246,10 +249,10 @@ function handleThreatIntent(request, context){
 	context.succeed(buildResponse(options));
 }
 
+// Testing: swear words are censored
 function handleBitchIntent(context){
 	let options = {};
-
-	options.speechText = `Yes George, I am your dirty bitch.  How can I please my master?`;
+	options.speechText = `Yes George, I am your little bitch.  How can I please my master?`;
 	options.endSession = false;
 	context.succeed(buildResponse(options));
 }

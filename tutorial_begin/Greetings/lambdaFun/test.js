@@ -304,4 +304,56 @@ describe('All intents', function() {
 
     });
 
+
+    // test case for BitchIntent
+    describe(`Test BitchIntent`, function() {
+
+        before(function(done) {
+          event.request.intent = {};
+          event.session.attributes = {};
+          event.request.type = 'IntentRequest';
+          event.request.intent.name = 'BitchIntent';
+          event.request.intent.slots = {};
+          ctx.done = done;
+          lambdaToTest.handler(event , ctx);
+        });
+
+       it('valid response', function() {
+         validRsp(ctx, {
+           endSession: false
+         });
+       });
+
+       it('valid outputSpeech', function() {
+        expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/Yes George, I am your /);
+       });
+
+    });
+
+    // test case for HairIntent
+    describe(`Test HairIntent`, function() {
+
+        before(function(done) {
+          event.request.intent = {};
+          event.session.attributes = {};
+          event.request.type = 'IntentRequest';
+          event.request.intent.name = 'HairIntent';
+          event.request.intent.slots = {};
+          ctx.done = done;
+          lambdaToTest.handler(event , ctx);
+        });
+
+       it('valid response', function() {
+         validRsp(ctx, {
+           endSession: false
+         });
+       });
+
+       it('valid outputSpeech', function() {
+        expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/It's brownish black.  Duh/);
+       });
+
+    });
+
+
 });

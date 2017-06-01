@@ -308,15 +308,15 @@ function handleNextQuoteIntent(request, context, session) {
 		} else {
 			options.speechText = quote;
 			options.speechText += " How about one more quote?";
-			options.repromptText = " You can say. yes.  or more."
+			options.repromptText = "You can say. yes.  or more."
 			options.endSession = false;
 			context.succeed(buildResponse(options));
 		}
 		});
 	} else {
 		options.speechText = "I haven't even told you a quote yet though";
-		
-		context.succeed(buildResponse(options));
 		options.endSession = true;
+		context.succeed(buildResponse(options));
+
 	}
 }

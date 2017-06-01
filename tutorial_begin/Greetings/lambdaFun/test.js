@@ -140,7 +140,8 @@ describe('All intents', function() {
 
   });
 
-// TEST CASES FOR ALL INTENTS *********************************************
+
+// TEST CASES FOR ALL INTENTS **************************************************************************
     
     // test case for HelloIntent
     describe(`Test HelloIntent`, function() {
@@ -407,6 +408,96 @@ describe('All intents', function() {
        });
 
     });
+
+    
+    // test case for QuoteIntent
+    describe(`Test QuoteIntent`, function() {
+
+        before(function(done) {
+          event.request.intent = {};
+          event.session.attributes = {};
+          event.request.type = 'IntentRequest';
+          event.request.intent.name = 'QuoteIntent';
+          event.request.intent.slots = {};
+          ctx.done = done;
+          lambdaToTest.handler(event , ctx);
+        });
+
+       it('valid response', function() {
+         validRsp(ctx, {
+           endSession: false
+         });
+       });
+
+       it('valid outputSpeech', function() {
+        expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/Would you like to hear /);
+       });
+
+       //Check if repromptSpeech matches expected repromptSpeech (Edited out because this is template)
+       it('valid repromptSpeech', function() {
+        expect(ctx.speechResponse.response.reprompt.outputSpeech.ssml).to.match(/You can say/);
+       });
+
+      });
+
+    
+    // test case for NextQuoteIntent when invoked properly
+    describe(`Test NextQuoteIntent proper invocation`, function() {
+
+        before(function(done) {
+          event.request.intent = {};
+          event.session.attributes = ctx.speechResponse.sessionAttributes;
+          event.request.type = 'IntentRequest';
+          event.request.intent.name = 'NextQuoteIntent';
+          event.request.intent.slots = {};
+          ctx.done = done;
+          lambdaToTest.handler(event , ctx);
+        });
+
+       it('valid response', function() {
+         validRsp(ctx, {
+           endSession: false
+         });
+       });
+
+       it('valid outputSpeech', function() {
+        expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/How about one more /);
+       });
+
+       // Check if repromptSpeech matches expected repromptSpeech (Edited out because this is template)
+       it('valid repromptSpeech', function() {
+        expect(ctx.speechResponse.response.reprompt.outputSpeech.ssml).to.match(/You can say/);
+       });
+
+      });
+
+
+    
+    // test case for NextQuoteIntent when invoked properly
+    describe(`Test NextQuoteIntent incorrect invocation`, function() {
+
+        before(function(done) {
+          event.request.intent = {};
+          event.session.attributes = {};
+          event.request.type = 'IntentRequest';
+          event.request.intent.name = 'NextQuoteIntent';
+          event.request.intent.slots = {};
+          ctx.done = done;
+          lambdaToTest.handler(event , ctx);
+        });
+
+       it('valid response', function() {
+         validRsp(ctx, {
+           endSession: true
+         });
+       });
+
+       it('valid outputSpeech', function() {
+        expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/I haven't even told /);
+       });
+
+     });
+
 
 
 

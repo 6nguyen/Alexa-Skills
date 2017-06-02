@@ -14,6 +14,14 @@ prints the message onto the screen
 def hello():
 	return "Congratulations!  The file you opened is running a locally hosted web service on the given IP address (found in the url path above)."
 
+'''
+Adding /alexa_end_point after the given IP address will run the function below
+instead of the previous function
+'''
+@app.route("/alexa_end_point")
+def alexa():
+	return "Hello!  You are now running the Alexa function. :)"
+
 # makes sure we're running the correct file, not another file w/ same name (? unclear)
 if __name__ == "__main__":
 	app.run()

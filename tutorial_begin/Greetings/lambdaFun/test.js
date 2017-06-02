@@ -499,6 +499,59 @@ describe('All intents', function() {
      });
 
 
+    
+    // test case for AMAZON.StopIntent
+    describe(`Test AMAZON.StopIntent`, function() {
+
+        before(function(done) {
+          event.request.intent = {};
+          event.session.attributes = {};
+          event.request.type = 'IntentRequest';
+          event.request.intent.name = 'AMAZON.StopIntent';
+          event.request.intent.slots = {};
+          ctx.done = done;
+          lambdaToTest.handler(event , ctx);
+        });
+
+       it('valid response', function() {
+         validRsp(ctx, {
+           endSession: true
+         });
+       });
+
+       it('valid outputSpeech', function() {
+        expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/Good bye./);
+       });
+
+     });
+
+
+    
+    // test case for AMAZON.CancelIntent
+    describe(`Test AMAZON.CancelIntent`, function() {
+
+        before(function(done) {
+          event.request.intent = {};
+          event.session.attributes = {};
+          event.request.type = 'IntentRequest';
+          event.request.intent.name = 'AMAZON.CancelIntent';
+          event.request.intent.slots = {};
+          ctx.done = done;
+          lambdaToTest.handler(event , ctx);
+        });
+
+       it('valid response', function() {
+         validRsp(ctx, {
+           endSession: true
+         });
+       });
+
+       it('valid outputSpeech', function() {
+        expect(ctx.speechResponse.response.outputSpeech.ssml).to.match(/Good bye./);
+       });
+
+     });
+
 
 
 });
